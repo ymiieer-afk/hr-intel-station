@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>招聘情报站 · HR 每日情报中心</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --tc-blue: #006EFF; --tc-blue-dark: #0052CC; --tc-blue-deep: #003D99;
+    --tc-blue-50: #F0F7FF; --tc-blue-100: #E6F2FF; --tc-blue-200: #CCE5FF;
+    --tc-purple: #6E5BFF; --tc-purple-50: #F2F0FF; --tc-purple-100: #E5E0FF;
+    --tc-pink: #FF4D94; --tc-orange: #FF7A45; --tc-orange-50: #FFF6EE;
+    --tc-green: #00C896; --tc-green-50: #E6FAF3;
+    --bg: #FFFFFF; --bg-soft: #F7F9FC; --bg-gray: #F2F4F7;
+    --border: #E5E7EB; --border-light: #F0F2F5;
+    --text-1: #1A1A1A; --text-2: #4E5969; --text-3: #86909C; --text-4: #C9CDD4;
+    --shadow-sm: 0 1px 2px rgba(0, 30, 80, 0.04), 0 1px 3px rgba(0, 30, 80, 0.05);
+    --shadow-md: 0 2px 4px rgba(0, 30, 80, 0.04), 0 4px 12px rgba(0, 30, 80, 0.05);
+    --shadow-lg: 0 4px 12px rgba(0, 30, 80, 0.05), 0 12px 24px rgba(0, 30, 80, 0.06);
+  }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--text-1); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { text-decoration: none; color: inherit; cursor: pointer; }
+  ul { list-style: none; }
+  .layout { display: flex; min-height: 100vh; transition: all 0.2s ease; }
+  .sidebar { width: 260px; background: #fff; border-right: 1px solid var(--border-light); position: sticky; top: 0; height: 100vh; overflow-y: auto; flex-shrink: 0; transition: all 0.2s ease; }
+  .layout.no-sidebar .sidebar { display: none; }
+  .layout.no-sidebar .main { width: 100%; }
+  .layout.no-sidebar .container { max-width: 1080px; }
+  .sidebar-inner { padding: 24px 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; padding: 8px 8px 20px; border-bottom: 1px solid var(--border-light); margin-bottom: 16px; }
+  .brand-mark { width: 36px; height: 36px; border-radius: 9px; background: linear-gradient(135deg, var(--tc-blue) 0%, var(--tc-purple) 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 16px; box-shadow: 0 2px 6px rgba(0, 110, 255, 0.25); }
+  .brand-text { display: flex; flex-direction: column; }
+  .brand-name { font-size: 15px; font-weight: 700; color: var(--text-1); letter-spacing: 0.2px; }
+  .brand-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; letter-spacing: 0.3px; }
+  .nav-section { margin-bottom: 18px; }
+  .nav-label { font-size: 11px; color: var(--text-3); font-weight: 600; letter-spacing: 1px; padding: 0 10px 8px; text-transform: uppercase; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; color: var(--text-2); font-size: 14px; font-weight: 500; margin-bottom: 2px; transition: all 0.15s ease; }
+  .nav-item:hover { background: var(--bg-soft); color: var(--text-1); }
+  .nav-item.active { background: var(--tc-blue-50); color: var(--tc-blue); font-weight: 600; }
+  .nav-badge { margin-left: auto; background: var(--tc-blue); color: #fff; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.3px; }
+  .nav-sub { margin-top: 4px; margin-left: 26px; border-left: 1px solid var(--border-light); padding-left: 12px; }
+  .nav-sub-item { display: block; padding: 7px 10px; font-size: 13px; color: var(--text-2); border-radius: 6px; margin-bottom: 2px; transition: all 0.15s ease; }
+  .nav-sub-item:hover { color: var(--text-1); background: var(--bg-soft); }
+  .nav-sub-item.active { color: var(--tc-blue); font-weight: 600; background: var(--tc-blue-50); }
+  .new-tag { display: inline-block; background: var(--tc-green-50); color: var(--tc-green); font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
+  .sidebar-foot { margin-top: 28px; padding: 14px; background: var(--bg-soft); border-radius: 10px; border: 1px solid var(--border-light); }
+  .sidebar-foot-title { font-size: 12px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+  .sidebar-foot-text { font-size: 11px; color: var(--text-3); line-height: 1.5; }
+  .sidebar-foot-status { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; font-size: 11px; color: var(--tc-green); font-weight: 600; }
+  .status-dot { width: 6px; height: 6px; background: var(--tc-green); border-radius: 50%; box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.18); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.18); } 50% { box-shadow: 0 0 0 5px rgba(0, 200, 150, 0.05); } }
+  .topnav { display: none; background: rgba(255, 255, 255, 0.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border-light); position: sticky; top: 0; z-index: 50; }
+  .layout.no-sidebar .topnav { display: block; }
+  .topnav-inner { max-width: 1080px; margin: 0 auto; padding: 14px 40px; display: flex; align-items: center; gap: 32px; }
+  .topnav-brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; color: var(--text-1); }
+  .topnav-brand-mark { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--tc-blue) 0%, var(--tc-purple) 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; box-shadow: 0 2px 6px rgba(0, 110, 255, 0.25); }
+  .topnav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+  .topnav-link { padding: 6px 14px; font-size: 14px; font-weight: 500; color: var(--text-2); border-radius: 6px; transition: all 0.15s ease; }
+  .topnav-link:hover { color: var(--text-1); background: var(--bg-soft); }
+  .topnav-status { display: inline-flex; align-items: center; gap: 6px; margin-left: 16px; font-size: 12px; color: var(--tc-green); font-weight: 600; }
+  .main { flex: 1; min-width: 0; background: var(--bg-soft); transition: all 0.2s ease; }
+  .container { max-width: 920px; margin: 0 auto; padding: 32px 40px 64px; transition: all 0.2s ease; }
+  .view { display: none; }
+  .view.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-3); margin-bottom: 20px; }
+  .breadcrumb .crumb-link { color: var(--text-3); }
+  .breadcrumb .crumb-link:hover { color: var(--tc-blue); }
+  .breadcrumb-sep { color: var(--text-4); }
+  .breadcrumb .current { color: var(--text-1); }
+  .hero { background: #fff; border: 1px solid var(--border-light); border-radius: 14px; padding: 36px 36px 30px; margin-bottom: 24px; box-shadow: var(--shadow-sm); text-align: center; }
+  .hero.report { text-align: left; padding: 32px 36px 28px; }
+  .hero-tag { display: inline-block; background: var(--tc-blue-50); color: var(--tc-blue); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.5px; margin-bottom: 16px; }
+  .hero-title { font-size: 38px; font-weight: 800; line-height: 1.25; letter-spacing: -0.5px; margin-bottom: 14px; background: linear-gradient(120deg, var(--tc-blue) 0%, var(--tc-purple) 55%, var(--tc-pink) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero.report .hero-title { font-size: 30px; }
+  .hero-sub { font-size: 14px; color: var(--text-2); line-height: 1.7; max-width: 640px; margin: 0 auto 22px; }
+  .hero.report .hero-sub { max-width: 720px; margin: 0; }
+  .hero-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 12px; color: var(--text-3); }
+  .hero-cta { display: flex; gap: 12px; justify-content: center; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; transition: all 0.15s ease; cursor: pointer; border: 1px solid transparent; }
+  .btn-primary { background: var(--tc-blue); color: #fff; }
+  .btn-primary:hover { background: var(--tc-blue-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 110, 255, 0.25); }
+  .btn-secondary { background: #fff; color: var(--text-1); border-color: var(--border); }
+  .btn-secondary:hover { border-color: var(--tc-blue); color: var(--tc-blue); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 24px 0 28px; }
+  .stats.report-stats { grid-template-columns: repeat(4, 1fr); }
+  .stat { padding: 18px 18px; background: #fff; border: 1px solid var(--border-light); border-radius: 12px; text-align: left; box-shadow: var(--shadow-sm); }
+  .hero .stat { background: var(--bg-soft); border: 1px solid var(--border-light); }
+  .stat-num { font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 6px; letter-spacing: -0.5px; }
+  .hero .stat-num { font-size: 28px; }
+  .stat-num.blue { color: var(--tc-blue); }
+  .stat-num.purple { color: var(--tc-purple); }
+  .stat-num.pink { color: var(--tc-pink); }
+  .stat-num.green { color: var(--tc-green); }
+  .stat-label { font-size: 12px; color: var(--text-3); font-weight: 500; }
+  .module { background: #fff; border: 1px solid var(--border-light); border-radius: 14px; margin-bottom: 24px; overflow: hidden; box-shadow: var(--shadow-sm); }
+  .module-head { padding: 22px 28px 18px; border-bottom: 2px solid; display: flex; align-items: center; gap: 14px; }
+  .module-head.industry { border-bottom-color: var(--tc-blue); background: linear-gradient(180deg, var(--tc-blue-50) 0%, #fff 100%); }
+  .module-head.org { border-bottom-color: var(--tc-purple); background: linear-gradient(180deg, var(--tc-purple-50) 0%, #fff 100%); }
+  .module-head.gossip { border-bottom-color: var(--tc-orange); background: linear-gradient(180deg, var(--tc-orange-50) 0%, #fff 100%); }
+  .module-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+  .module-icon.industry { background: linear-gradient(135deg, var(--tc-blue) 0%, var(--tc-blue-dark) 100%); }
+  .module-icon.org { background: linear-gradient(135deg, var(--tc-purple) 0%, #4D3FBF 100%); }
+  .module-icon.gossip { background: linear-gradient(135deg, var(--tc-orange) 0%, #E65100 100%); }
+  .module-title-wrap { flex: 1; }
+  .module-title { font-size: 20px; font-weight: 700; color: var(--text-1); line-height: 1.3; }
+  .module-title-en { font-size: 11px; color: var(--text-3); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+  .module-count { font-size: 12px; color: var(--text-3); font-weight: 500; padding: 4px 10px; background: #fff; border: 1px solid var(--border-light); border-radius: 20px; }
+  .module-body { padding: 8px 28px 24px; }
+  .report-card { display: flex; gap: 18px; padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); background: #fff; margin-bottom: 12px; transition: all 0.2s ease; }
+  .report-card:hover { border-color: var(--tc-blue); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .report-card:last-child { margin-bottom: 0; }
+  .report-date { width: 88px; flex-shrink: 0; background: var(--tc-blue-50); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px 0; }
+  .report-date-day { font-size: 32px; font-weight: 800; color: var(--tc-blue); line-height: 1; }
+  .report-date-mo { font-size: 11px; color: var(--text-2); font-weight: 600; margin-top: 4px; letter-spacing: 0.5px; }
+  .report-info { flex: 1; min-width: 0; }
+  .report-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; color: var(--text-3); }
+  .report-title { font-size: 17px; font-weight: 700; color: var(--text-1); line-height: 1.4; margin-bottom: 6px; }
+  .report-summary { font-size: 13px; color: var(--text-2); line-height: 1.6; margin-bottom: 10px; }
+  .report-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .report-tag { font-size: 11px; color: var(--text-2); padding: 2px 8px; background: var(--bg-soft); border-radius: 4px; font-weight: 500; }
+  .report-tag-blue { color: var(--tc-blue); background: var(--tc-blue-50); }
+  .report-tag-purple { color: var(--tc-purple); background: var(--tc-purple-50); }
+  .event { padding: 20px 0; border-bottom: 1px dashed var(--border-light); display: flex; gap: 18px; }
+  .event:last-child { border-bottom: none; }
+  .event-no { width: 36px; height: 36px; border-radius: 50%; color: #fff; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .event-no.blue { background: linear-gradient(135deg, var(--tc-blue) 0%, var(--tc-blue-dark) 100%); }
+  .event-no.purple { background: linear-gradient(135deg, var(--tc-purple) 0%, #4D3FBF 100%); }
+  .event-content { flex: 1; min-width: 0; }
+  .event-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .company-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 4px; border-radius: 14px; font-size: 12px; font-weight: 600; color: var(--text-1); border: 1px solid var(--border); background: #fff; }
+  .company-logo { width: 22px; height: 22px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.3px; }
+  .company-logo.boss { background: linear-gradient(135deg, #00B6F3 0%, #0086D4 100%); }
+  .company-logo.ms { background: linear-gradient(135deg, #00A4EF 0%, #0078D4 100%); }
+  .company-logo.tx { background: linear-gradient(135deg, #0086D4 0%, #00A8E8 100%); }
+  .company-logo.ali { background: linear-gradient(135deg, #FF6A00 0%, #FF8C2E 100%); }
+  .event-tag { font-size: 11px; color: var(--text-2); padding: 2px 8px; background: var(--bg-soft); border-radius: 4px; font-weight: 500; }
+  .event-headline { font-size: 17px; font-weight: 700; color: var(--text-1); line-height: 1.4; margin-bottom: 10px; }
+  .event-desc { font-size: 14px; color: var(--text-2); line-height: 1.75; margin-bottom: 12px; }
+  .event-desc strong { color: var(--tc-blue-dark); font-weight: 700; }
+  .event-bullets { background: var(--bg-soft); border-left: 3px solid var(--tc-blue); padding: 12px 16px; border-radius: 0 6px 6px 0; margin-bottom: 12px; }
+  .module-head.org ~ .module-body .event-bullets { border-left-color: var(--tc-purple); }
+  .event-bullets li { font-size: 13px; color: var(--text-2); line-height: 1.8; position: relative; padding-left: 14px; }
+  .event-bullets li::before { content: ""; width: 5px; height: 5px; background: var(--tc-blue); border-radius: 50%; position: absolute; left: 0; top: 11px; }
+  .module-head.org ~ .module-body .event-bullets li::before { background: var(--tc-purple); }
+  .insight { background: var(--tc-orange-50); border: 1px solid #FFD9B8; border-radius: 8px; padding: 12px 16px; display: flex; gap: 10px; align-items: flex-start; }
+  .insight-tag { flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--tc-orange); background: #fff; border: 1px solid #FFD9B8; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px; height: 22px; line-height: 14px; }
+  .insight-text { font-size: 13px; color: #5C3D1A; line-height: 1.7; font-weight: 500; }
+  .event-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+  .event-source { font-size: 12px; color: var(--text-3); }
+  .read-more { font-size: 13px; color: var(--tc-blue); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+  .read-more:hover { gap: 8px; transition: gap 0.2s ease; }
+  .watch { background: #fff; border: 1px solid var(--border-light); border-radius: 14px; padding: 22px 28px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+  .watch-title { font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .watch-title::before { content: ""; width: 4px; height: 16px; background: var(--tc-orange); border-radius: 2px; }
+  .watch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .watch-item { display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; background: var(--bg-soft); border-radius: 8px; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+  .watch-item-arrow { color: var(--tc-orange); font-weight: 700; flex-shrink: 0; }
+  .sources { background: #fff; border: 1px solid var(--border-light); border-radius: 14px; padding: 20px 28px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+  .sources-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 12px; }
+  .sources-list { display: flex; flex-direction: column; gap: 8px; }
+  .source-item { font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 8px; }
+  .source-item::before { content: "▸"; color: var(--tc-blue); font-size: 10px; }
+  .source-item a { color: var(--text-2); }
+  .source-item a:hover { color: var(--tc-blue); }
+  .hiring-intro { padding: 20px 28px; font-size: 13px; color: var(--text-2); line-height: 1.7; background: var(--bg-soft); border-bottom: 1px solid var(--border-light); }
+  .hiring-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 20px 28px; }
+  .hiring-card { background: #fff; border: 1px solid var(--border-light); border-radius: 10px; padding: 16px 18px; transition: all 0.15s ease; }
+  .hiring-card:hover { border-color: var(--tc-purple); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .hiring-card-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .hiring-card-emoji { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, var(--tc-blue-50), var(--tc-purple-50)); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .hiring-card-desc { font-size: 12px; color: var(--text-2); line-height: 1.6; }
+  .logos { background: #fff; border: 1px solid var(--border-light); border-radius: 14px; padding: 22px 28px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+  .logos-title { font-size: 14px; font-weight: 700; color: var(--text-1); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .logos-title::before { content: ""; width: 4px; height: 14px; background: var(--tc-blue); border-radius: 2px; }
+  .logo-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .logo-cell { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--bg-soft); border-radius: 8px; font-size: 12px; font-weight: 600; color: var(--text-2); transition: all 0.15s ease; }
+  .logo-cell:hover { background: #fff; box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+  .logo-dot { width: 20px; height: 20px; border-radius: 5px; color: #fff; font-size: 9px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-dot.ali { background: linear-gradient(135deg, #FF6A00 0%, #FF8C2E 100%); }
+  .logo-dot.tx { background: linear-gradient(135deg, #0086D4 0%, #00A8E8 100%); }
+  .logo-dot.bytedance { background: linear-gradient(135deg, #1A1A1A 0%, #4A4A4A 100%); }
+  .logo-dot.mt { background: linear-gradient(135deg, #FFC300 0%, #FF8800 100%); }
+  .logo-dot.jd { background: linear-gradient(135deg, #E1251B 0%, #FF4D43 100%); }
+  .logo-dot.pdd { background: linear-gradient(135deg, #E02E24 0%, #FF6058 100%); }
+  .logo-dot.ks { background: linear-gradient(135deg, #FF4906 0%, #FF7A45 100%); }
+  .logo-dot.xhs { background: linear-gradient(135deg, #FF2442 0%, #FF5C7A 100%); }
+  .logo-dot.bili { background: linear-gradient(135deg, #00A1D6 0%, #33B5E5 100%); }
+  .logo-dot.boss { background: linear-gradient(135deg, #00B6F3 0%, #0086D4 100%); }
+  .footer { margin-top: 32px; padding: 20px 0; border-top: 1px solid var(--border-light); text-align: center; font-size: 12px; color: var(--text-3); }
+  .footer-line { margin: 4px 0; }
+  .gossip-disclaimer { background: linear-gradient(135deg, #FFF6EE 0%, #FFE4D2 100%); border: 1px solid #FFD9B8; border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; display: flex; gap: 12px; align-items: flex-start; font-size: 12px; color: #5C3D1A; line-height: 1.7; }
+  .gossip-disclaimer-icon { font-size: 18px; flex-shrink: 0; line-height: 1; }
+  .gossip-disclaimer strong { color: #C24A1A; }
+  .gossip-card { background: #fff; border: 1px solid var(--border-light); border-left: 4px solid var(--tc-orange); border-radius: 12px; padding: 18px 22px; margin-bottom: 12px; transition: all 0.2s ease; box-shadow: var(--shadow-sm); }
+  .gossip-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-left-color: var(--tc-pink); }
+  .gossip-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+  .gossip-card-no { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--tc-orange) 0%, #E65100 100%); color: #fff; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .gossip-tag-hot { font-size: 11px; font-weight: 700; color: #fff; background: linear-gradient(135deg, #FF4D4D 0%, #E65100 100%); padding: 2px 8px; border-radius: 4px; }
+  .gossip-tag-fresh { font-size: 11px; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--tc-green) 0%, #00A676 100%); padding: 2px 8px; border-radius: 4px; }
+  .gossip-tag-emo { font-size: 11px; font-weight: 700; color: var(--tc-orange); background: var(--tc-orange-50); border: 1px solid #FFD9B8; padding: 2px 8px; border-radius: 4px; }
+  .gossip-card-time { font-size: 11px; color: var(--text-3); margin-left: auto; }
+  .gossip-card-title { font-size: 15px; font-weight: 700; color: var(--text-1); line-height: 1.4; margin-bottom: 8px; }
+  .gossip-card-desc { font-size: 13px; color: var(--text-2); line-height: 1.7; margin-bottom: 12px; }
+  .gossip-card-desc strong { color: var(--tc-orange); font-weight: 700; }
+  .gossip-card-foot { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-3); }
+  .gossip-source { font-style: italic; }
+</style>
+</head>
+<body>
+<div class="layout no-sidebar" id="layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <div class="brand">
+        <div class="brand-mark">HR</div>
+        <div class="brand-text">
+          <div class="brand-name">招聘情报站</div>
+          <div class="brand-sub">HR 每日情报中心</div>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">导航</div>
+        <a class="nav-item active" data-view="home" onclick="switchView('home', this)">
+          <span class="nav-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+          首页
+        </a>
+        <a class="nav-item" data-view="industry" onclick="switchView('industry', this)">
+          <span class="nav-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h2l3-9 4 18 3-9 3 6h5"/></svg></span>
+          行业情报
+          <span class="nav-badge">NEW</span>
+        </a>
+        <a class="nav-item" data-view="hiring" onclick="switchView('hiring', this)">
+          <span class="nav-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></span>
+          招聘需求
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">日报归档</div>
+        <div class="nav-sub">
+          <a class="nav-sub-item" data-view="report-2026-06-17" onclick="switchView('report-2026-06-17', this)">
+            2026-06-17
+            <span class="new-tag">NEW</span>
+          </a>
+          <a class="nav-sub-item disabled">2026-06-16</a>
+          <a class="nav-sub-item disabled">2026-06-15</a>
+          <a class="nav-sub-item disabled">更早...</a>
+        </div>
+      </div>
+
+      <div class="sidebar-foot">
+        <div class="sidebar-foot-title">自动更新</div>
+        <div class="sidebar-foot-text">每日 09:00 自动更新，由扣子话题追踪技能驱动</div>
+        <div class="sidebar-foot-status">
+          <span class="status-dot"></span>
+          实时运行中
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Top Nav (home only) -->
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <div class="topnav-brand">
+        <div class="topnav-brand-mark">HR</div>
+        <span>招聘情报站</span>
+      </div>
+      <div class="topnav-links">
+        <a class="topnav-link" onclick="switchView('industry', document.querySelector('[data-view=industry]'))">行业情报</a>
+        <a class="topnav-link" onclick="switchView('report-2026-06-17', document.querySelector('[data-view=report-2026-06-17]'))">最新日报</a>
+        <a class="topnav-link" onclick="switchView('hiring', document.querySelector('[data-view=hiring]'))">招聘需求</a>
+        <div class="topnav-status"><span class="status-dot"></span> 09:00 自动更新</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="container">
+
+      <!-- ============== View: Home ============== -->
+      <section class="view active" id="view-home">
+        <section class="hero">
+          <div class="hero-tag">互联网 HR 情报</div>
+          <h1 class="hero-title">招聘情报站</h1>
+          <p class="hero-sub">每日追踪互联网行业招聘趋势、AI工具应用、组织变化与八卦，为 HR 和招聘从业者提供可落地的知识输入。</p>
+          <div class="hero-meta">
+            <span>📅 每日 09:00 自动更新</span>
+            <span>·</span>
+            <span>🔍 行业动态 + 组织变化 + 后厂村八卦</span>
+          </div>
+          <div class="hero-cta">
+            <button class="btn btn-primary" onclick="switchView('report-2026-06-17', document.querySelector('[data-view=report-2026-06-17]'))">
+              📰 查看今日日报
+            </button>
+            <button class="btn btn-secondary" onclick="switchView('industry', document.querySelector('[data-view=industry]'))">
+              📊 历史情报
+            </button>
+          </div>
+        </section>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-num blue">2</div>
+            <div class="stat-label">今日重点事件</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num purple">1</div>
+            <div class="stat-label">组织变化</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num green">1</div>
+            <div class="stat-label">行业数据</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" style="color: var(--tc-orange);">6</div>
+            <div class="stat-label">近 7 日八卦</div>
+          </div>
+        </div>
+
+        <section class="module">
+          <div class="module-head industry">
+            <div class="module-icon industry">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h2l3-9 4 18 3-9 3 6h5"/></svg>
+            </div>
+            <div class="module-title-wrap">
+              <div class="module-title">今日日报</div>
+              <div class="module-title-en">TODAY'S BRIEF</div>
+            </div>
+            <div class="module-count">2026-06-17</div>
+          </div>
+          <div class="module-body">
+            <div class="report-card" onclick="switchView('report-2026-06-17', this)" style="cursor:pointer">
+              <div class="report-date">
+                <div class="report-date-day">17</div>
+                <div class="report-date-mo">06 月</div>
+              </div>
+              <div class="report-info">
+                <div class="report-meta">
+                  <span>日报</span>
+                  <span>·</span>
+                  <span>第 25 周 · 周二</span>
+                </div>
+                <div class="report-title">微软 Azure 中国裁员 N+7 · 前程无忧招聘行情报告</div>
+                <div class="report-summary">微软 Azure 中国区启动新一轮裁员并以 N+7 高额补偿收场，外企裁员走向「体面化」；前程无忧报告显示 AI 与全球化正双轮驱动电商人才供需升级。</div>
+                <div class="report-tags">
+                  <span class="report-tag report-tag-blue">AI 招聘</span>
+                  <span class="report-tag report-tag-purple">组织优化</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="empty">
+              <div class="empty-icon">📅</div>
+              <div>更多历史周报将在每日 09:00 自动归档</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="logos">
+          <div class="logos-title">监测公司</div>
+          <div class="logo-grid">
+            <div class="logo-cell"><span class="logo-dot ali">阿</span>阿里巴巴</div>
+            <div class="logo-cell"><span class="logo-dot tx">腾</span>腾讯</div>
+            <div class="logo-cell"><span class="logo-dot bytedance">字</span>字节跳动</div>
+            <div class="logo-cell"><span class="logo-dot mt">美</span>美团</div>
+            <div class="logo-cell"><span class="logo-dot jd">京</span>京东</div>
+            <div class="logo-cell"><span class="logo-dot pdd">多</span>拼多多</div>
+            <div class="logo-cell"><span class="logo-dot ks">快</span>快手</div>
+            <div class="logo-cell"><span class="logo-dot xhs">书</span>小红书</div>
+            <div class="logo-cell"><span class="logo-dot bili">B</span>B站</div>
+            <div class="logo-cell"><span class="logo-dot boss">BOSS</span>Boss直聘</div>
+          </div>
+        </section>
+
+        <div class="footer">
+          <div class="footer-line">© 2026 招聘情报站 · HR 每日情报中心</div>
+          <div class="footer-line">由扣子话题追踪技能驱动 · 每日 09:00 自动更新</div>
+        </div>
+      </section>
+
+      <!-- ============== View: Industry ============== -->
+      <section class="view" id="view-industry">
+        <div class="breadcrumb">
+          <a class="crumb-link" data-view="home" onclick="switchView('home', this)">招聘情报站</a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="current">行业情报</span>
+        </div>
+
+        <section class="hero">
+          <div class="hero-title">行业情报中心</div>
+          <p class="hero-sub">追踪互联网行业招聘趋势、AI工具应用与组织变化，持续关注，持续更新。</p>
+        </section>
+
+        <section class="module">
+          <div class="module-head industry">
+            <div class="module-icon industry">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h2l3-9 4 18 3-9 3 6h5"/></svg>
+            </div>
+            <div class="module-title-wrap">
+              <div class="module-title">日报归档</div>
+              <div class="module-title-en">REPORT ARCHIVE</div>
+            </div>
+          </div>
+          <div class="module-body">
+            <div class="report-card" onclick="switchView('report-2026-06-17', this)" style="cursor:pointer">
+              <div class="report-date">
+                <div class="report-date-day">17</div>
+                <div class="report-date-mo">06 月</div>
+              </div>
+              <div class="report-info">
+                <div class="report-meta">
+                  <span>日报</span>
+                  <span>·</span>
+                  <span>第 25 周 · 周二</span>
+                </div>
+                <div class="report-title">微软 Azure 中国裁员 N+7 · 前程无忧招聘行情报告</div>
+                <div class="report-summary">微软 Azure 中国区启动新一轮裁员并以 N+7 高额补偿收场；前程无忧报告显示 AI 与全球化正双轮驱动电商人才供需升级。</div>
+                <div class="report-tags">
+                  <span class="report-tag report-tag-blue">AI 招聘</span>
+                  <span class="report-tag report-tag-purple">组织优化</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="empty">
+              <div class="empty-icon">📅</div>
+              <div>更多历史周报将在每日 09:00 自动归档</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="footer">
+          <div class="footer-line">© 2026 招聘情报站 · HR 每日情报中心</div>
+        </div>
+      </section>
+
+      <!-- ============== View: Report 2026-06-17 ============== -->
+      <section class="view" id="view-report-2026-06-17">
+        <div class="breadcrumb">
+          <a class="crumb-link" data-view="home" onclick="switchView('home', this)">招聘情报站</a>
+          <span class="breadcrumb-sep">/</span>
+          <a class="crumb-link" data-view="industry" onclick="switchView('industry', this)">行业情报</a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="current">2026-06-17 日报</span>
+        </div>
+
+        <section class="hero report">
+          <div class="hero-meta">
+            <span class="hero-tag">日报</span>
+            <span>2026-06-17 · 第 25 周 · 周二</span>
+          </div>
+          <h1 class="hero-title">互联网行业 HR 每日情报</h1>
+          <p class="hero-sub">
+            本期聚焦两个方向：微软 Azure 中国区启动新一轮裁员并以 N+7 高额补偿收场，外企裁员走向「体面化」成为行业话题；前程无忧同期发布《2026 电商行业人才市场洞察》，AI 与全球化正双轮驱动电商人才供需结构性升级。
+          </p>
+          <div class="stats report-stats">
+            <div class="stat">
+              <div class="stat-num blue">2</div>
+              <div class="stat-label">重点事件</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num purple">1</div>
+              <div class="stat-label">组织变化</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num green">1</div>
+              <div class="stat-label">行业数据</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num" style="color: var(--tc-orange);">6</div>
+              <div class="stat-label">近 7 日八卦</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 组织架构变化 -->
+        <section class="module">
+          <div class="module-head org">
+            <div class="module-icon org">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            </div>
+            <div class="module-title-wrap">
+              <div class="module-title">组织变化</div>
+              <div class="module-title-en">ORG · SHIFT</div>
+            </div>
+            <div class="module-count">1 条</div>
+          </div>
+          <div class="module-body">
+            <div class="event">
+              <div class="event-no purple">1</div>
+              <div class="event-content">
+                <div class="event-meta">
+                  <div class="company-chip">
+                    <span class="company-logo ms">MS</span>
+                    微软 / Azure 中国
+                  </div>
+                  <span class="event-tag">组织优化 · 外企动向</span>
+                </div>
+                <div class="event-headline">微软 Azure 中国区裁员 200-400 人，补偿方案最高 N+7</div>
+                <p class="event-desc">
+                  据媒体报道，微软 Azure 云业务部门于 6 月 16 日在北京和上海两地启动人员优化，涉及 <strong>200 至 400 名</strong>员工，统一离职日期定在 7 月 6 日。
+                </p>
+                <p class="event-desc">
+                  与行业常见的焦虑裁员不同，本次补偿方案诚意十足：基础补偿 N+4，叠加 6 月 11 日前签字奖励 2 个月薪资与 1 个月离职缓冲，顶配可达 <strong>N+7</strong>；未休年假按高标准折现，员工持有的微软股票也可提前归属。微软同步开放内部转岗通道，符合条件的员工可申请调往美国、爱尔兰、加拿大等海外团队。
+                </p>
+                <ul class="event-bullets">
+                  <li>裁员精准锁定 Azure 核心研发团队（云架构、AI 模型训练、本地化服务）</li>
+                  <li>微软亚洲软件技术中心、AI 团队等板块未受影响</li>
+                  <li>被普遍解读为微软全球云业务重心的战略调整</li>
+                  <li>AWS 中国区主流补偿 N+3、核心技术岗可协商至 N+6</li>
+                </ul>
+                <div class="insight">
+                  <span class="insight-tag">实操启示</span>
+                  <span class="insight-text">外企裁员「体面化」趋势愈发明显：高额赔付背后是落后产能与冗余岗位的淘汰，而非行业寒冬。对 HR 而言，这一趋势提示组织优化时需兼顾效率与人文关怀。</span>
+                </div>
+                <div class="event-foot">
+                  <div class="event-source">来源：网易新闻、搜狐</div>
+                  <a class="read-more" href="https://c.m.163.com/news/a/KVHOSOAQ053193D6.html" target="_blank">阅读原文 →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 行业数据 -->
+        <section class="module">
+          <div class="module-head industry">
+            <div class="module-icon industry">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h2l3-9 4 18 3-9 3 6h5"/></svg>
+            </div>
+            <div class="module-title-wrap">
+              <div class="module-title">行业数据</div>
+              <div class="module-title-en">DATA · PULSE</div>
+            </div>
+            <div class="module-count">1 条</div>
+          </div>
+          <div class="module-body">
+            <div class="event">
+              <div class="event-no blue">1</div>
+              <div class="event-content">
+                <div class="event-meta">
+                  <div class="company-chip">
+                    <span class="company-logo boss">BOSS</span>
+                    前程无忧 51job
+                  </div>
+                  <span class="event-tag">行业报告 · AI 人才</span>
+                </div>
+                <div class="event-headline">前程无忧报告：AI 与全球化双轮驱动电商人才供需升级</div>
+                <p class="event-desc">
+                  前程无忧 51job 于 6 月 16 日发布《2026 电商行业人才市场洞察》，指出当前电商行业人才需求呈现「规模稳定、结构升级」特征。
+                </p>
+                <ul class="event-bullets">
+                  <li><strong>AI 岗位需求猛增</strong>：算法类岗位招聘需求同比增幅接近<strong>七成</strong>，数据分析岗位增超一倍</li>
+                  <li><strong>结构性错配持续</strong>：企业真正紧缺的技术型人才仍存在供给缺口</li>
+                  <li><strong>全球化成第二驱动力</strong>：跨境电商运营连续多个季度进入热门招聘岗位榜单，相关岗位数量同比增长接近两成</li>
+                </ul>
+                <div class="insight">
+                  <span class="insight-tag">实操启示</span>
+                  <span class="insight-text">AI 与全球化正成为驱动电商行业人才结构变化的两大核心力量。HR 需重点关注算法、数据分析、跨境运营等岗位的招聘策略，同时关注人才供给与需求的结构性错配问题。</span>
+                </div>
+                <div class="event-foot">
+                  <div class="event-source">来源：财经网</div>
+                  <a class="read-more" href="http://m.caijing.com.cn/s/202606/5165496" target="_blank">阅读原文 →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 后厂村八卦（近 7 日） -->
+        <section class="module">
+          <div class="module-head gossip">
+            <div class="module-icon gossip">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div class="module-title-wrap">
+              <div class="module-title">后厂村八卦 · 近 7 日</div>
+              <div class="module-title-en">GOSSIP · 7-DAY</div>
+            </div>
+            <div class="module-count">6 条</div>
+          </div>
+          <div class="module-body">
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">1</div>
+                <div class="company-chip">
+                  <span class="company-logo ali">阿里</span>
+                  阿里巴巴 / 钉钉
+                </div>
+                <span class="gossip-tag-hot">🔥 爆</span>
+                <span class="gossip-card-time">本周</span>
+              </div>
+              <div class="gossip-card-title">📝 一篇离职信干掉钉钉 CEO，92 年极客接棒</div>
+              <p class="gossip-card-desc">
+                钉钉前 AI 产品经理滕雅辛（花名「幽素」）在内网发表 <strong>105 页、7.5 万字</strong>离职长文，详细复盘旗舰 AI 项目 ONE 如何从 300 万 DAU 到 10 个月内走向收缩。文章引发内网炸裂，阿里合伙人委员会<strong>首次以委员会名义发帖定性</strong>：「不是阿里文化该有的样子」。6 月 11 日，钉钉 CEO 陈航（无招）卸任，<strong>92 年出生的陈宇森</strong>接棒，成为阿里最年轻的事业部 CEO。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自拾号智栈</span>
+                <span>🍉 脉脉热帖</span>
+              </div>
+            </div>
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">2</div>
+                <div class="company-chip">
+                  <span class="company-logo tx">腾</span>
+                  腾讯
+                </div>
+                <span class="gossip-tag-hot">🔥 爆</span>
+                <span class="gossip-card-time">本周</span>
+              </div>
+              <div class="gossip-card-title">💰 Token 额度从 2000 美元砍到 3000 块人民币</div>
+              <p class="gossip-card-desc">
+                腾讯员工 6 月第二周打开内部看板发现：上个月还写着 <strong>2000 美元</strong>的月度 Token 额度，变成了 <strong>3000 元人民币</strong>——按汇率算差不多砍了八成。从此前每人年均 22 万元 Token 的「最慷慨」政策，变成按部门、岗位、任务场景差异化动态分配。大模型核心部门没有限制，部分边缘部门已砍半。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自前行者 + 九派财经</span>
+                <span>🍉 砍八成引热议</span>
+              </div>
+            </div>
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">3</div>
+                <div class="company-chip">
+                  <span class="logo-dot" style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#00A4EF 0%,#0078D4 100%);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">阿</span>
+                  阿里巴巴
+                </div>
+                <span class="gossip-tag-emo">🏛️ 高管</span>
+                <span class="gossip-card-time">上周</span>
+              </div>
+              <div class="gossip-card-title">🤝 Qwen 团队技术负责人林俊旸等 AI 高管相继离职</div>
+              <p class="gossip-card-desc">
+                2026 年上半年，阿里巴巴 AI 业务连续发生三次重大人事震荡：Qwen 团队技术负责人林俊旸（清华本+伯克利博，原 OpenAI 出身）、后训练负责人郁博文、核心成员惠彬原等相继离队。导火索是通义实验室计划将 Qwen 从垂直整合模式拆分为水平分工团队，与林推崇的「小团队、大闭环」打法冲突。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自 firecat-web</span>
+                <span>🍉 AI 人才争夺</span>
+              </div>
+            </div>
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">4</div>
+                <div class="company-chip">
+                  <span class="logo-dot" style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#FF4906 0%,#FF7A45 100%);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">37</span>
+                  三七互娱
+                </div>
+                <span class="gossip-tag-fresh">NEW</span>
+                <span class="gossip-card-time">本周</span>
+              </div>
+              <div class="gossip-card-title">🎮 游戏公司校招超 S 档：技术岗最高 80 万年薪</div>
+              <p class="gossip-card-desc">
+                三七互娱 2026 年校招推出<strong>超 S 档年薪 Offer</strong>：技术类最高 <strong>80 万</strong>，非技术类最高 50 万。双休制度、住房免息借款最高 50 万、新生代基金每胎 2 万、学历提升每年 100 万预算报销。在游戏行业属于<strong>第一梯队</strong>薪资竞争力。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自脉脉 + 看准网</span>
+                <span>🍉 游戏圈最强校招</span>
+              </div>
+            </div>
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">5</div>
+                <div class="company-chip">
+                  <span class="logo-dot" style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#E02E24 0%,#FF6058 100%);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">多</span>
+                  拼多多
+                </div>
+                <span class="gossip-tag-emo">💵 高薪</span>
+                <span class="gossip-card-time">上周</span>
+              </div>
+              <div class="gossip-card-title">💎 985 本 13 年经验：拼多多年薪 135 万</div>
+              <p class="gossip-card-desc">
+                脉脉热帖爆料：某 985 本科、13 年经验背景，跳槽来拼多多年薪约 <strong>135 万</strong>。此前在事务所年薪约 70 万，三年前入职时给 115 万，目前薪资已是外部同 level 的<strong>数倍</strong>。帖子下「拼多多薪资恐怖」成为热门跟帖。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自脉脉职言</span>
+                <span>🍉 薪酬天花板</span>
+              </div>
+            </div>
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">6</div>
+                <div class="company-chip">
+                  <span class="logo-dot" style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#FFC300 0%,#FF8800 100%);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">美</span>
+                  美团
+                </div>
+                <span class="gossip-tag-emo">🔄 辟谣</span>
+                <span class="gossip-card-time">本周</span>
+              </div>
+              <div class="gossip-card-title">🚫 杭州大厂裁员传：美团紧急辟谣</div>
+              <p class="gossip-card-desc">
+                网传杭州某头部大厂旗下旅游业务线启动大规模裁员，其中测试、前端岗位裁员比例高达 <strong>50%</strong>，后端 30%，产品岗 15%，启动时间传为 6 月 30 日。随后美团紧急辟谣「不实消息」。值得注意的是，美团 2026 年春招仍在进行，「北斗计划」等面向全球科技人才的招聘也在推进。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自网易 + 脉脉</span>
+                <span>🍉 虚惊一场</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <div class="gossip-disclaimer">
+          <span class="gossip-disclaimer-icon">🍉</span>
+          <div>
+            <strong>吃瓜提示：</strong>本栏目八卦综合自脉脉职言、小红书「大厂日爆」类自媒体、36氪/搜狐等公开渠道爆料，<strong>仅供娱乐参考</strong>，不代表本情报站立场。如涉及具体个人，请相关方通过法律途径解决。
+          </div>
+        </div>
+
+        <section class="watch">
+          <div class="watch-title">后续关注</div>
+          <div class="watch-grid">
+            <div class="watch-item"><span class="watch-item-arrow">›</span>微软 Azure 中国区业务调整完成后，中国区团队规模与业务方向</div>
+            <div class="watch-item"><span class="watch-item-arrow">›</span>跨境电商运营岗位薪资水平与出海企业招聘需求变化</div>
+            <div class="watch-item"><span class="watch-item-arrow">›</span>更多外企是否会跟进「体面化」裁员标准</div>
+            <div class="watch-item"><span class="watch-item-arrow">›</span>腾讯 Token 差异化分配政策对员工使用 AI 的实际影响</div>
+          </div>
+        </section>
+
+        <section class="sources">
+          <div class="sources-title">信息来源</div>
+          <div class="sources-list">
+            <div class="source-item"><a href="https://c.m.163.com/news/a/KVHOSOAQ053193D6.html" target="_blank">网易新闻 · 微软中国裁员补偿N+7</a></div>
+            <div class="source-item"><a href="http://m.caijing.com.cn/s/202606/5165496" target="_blank">财经网 · 前程无忧2026电商行业人才市场洞察</a></div>
+          </div>
+        </section>
+
+        <div class="footer">
+          <div class="footer-line">© 2026 招聘情报站 · HR 每日情报中心</div>
+          <div class="footer-line">由扣子话题追踪技能驱动 · 每日 09:00 自动更新</div>
+        </div>
+      </section>
+
+      <!-- ============== View: Hiring ============== -->
+      <section class="view" id="view-hiring">
+        <div class="breadcrumb">
+          <a class="crumb-link" data-view="home" onclick="switchView('home', this)">招聘情报站</a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="current">招聘需求</span>
+        </div>
+
+        <section class="module">
+          <div class="module-head org">
+            <div class="module-icon org">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M16 3.13a4 4 0 0 1 0 7.75M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
+            </div>
+            <div class="module-title-wrap">
+              <div class="module-title">招聘需求</div>
+              <div class="module-title-en">HIRING · DEMAND</div>
+            </div>
+          </div>
+
+          <div class="hiring-intro">
+            围绕 HR 行业的前沿方向，情报站重点追踪以下领域的招聘需求变化与人才画像演进，为 HR 自身能力建设与团队招聘决策提供参考。
+          </div>
+
+          <div class="hiring-grid">
+            <div class="hiring-card">
+              <div class="hiring-card-title"><div class="hiring-card-emoji">🤖</div>AI 招聘产品经理</div>
+              <div class="hiring-card-desc">负责 AI Agent 类工具的产品设计，熟悉大模型能力边界，能将 HR 流程转化为可落地的产品方案。</div>
+            </div>
+            <div class="hiring-card">
+              <div class="hiring-card-title"><div class="hiring-card-emoji">📊</div>人力数据分析专家</div>
+              <div class="hiring-card-desc">搭建人力数据指标体系，从组织健康度、人效、人力成本等维度为业务决策提供数据支撑。</div>
+            </div>
+            <div class="hiring-card">
+              <div class="hiring-card-title"><div class="hiring-card-emoji">🌏</div>海外 HRBP</div>
+              <div class="hiring-card-desc">服务东南亚、中东等海外业务的扩张需求，熟悉当地劳动法规与文化差异，能搭建属地化 HR 体系。</div>
+            </div>
+            <div class="hiring-card">
+              <div class="hiring-card-title"><div class="hiring-card-emoji">🧠</div>组织发展（OD）专家</div>
+              <div class="hiring-card-desc">在 AI 替代传统岗位的趋势下，主导岗位价值评估体系重塑、组织架构优化与高潜人才培养。</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="footer">
+          <div class="footer-line">© 2026 招聘情报站 · HR 每日情报中心</div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  function switchView(name, el) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const target = document.getElementById('view-' + name);
+    if (target) {
+      target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    const layout = document.querySelector('.layout');
+    if (name === 'home') {
+      layout.classList.add('no-sidebar');
+    } else {
+      layout.classList.remove('no-sidebar');
+    }
+    document.querySelectorAll('.nav-item, .nav-sub-item').forEach(n => n.classList.remove('active'));
+    if (el) {
+      el.classList.add('active');
+      if (el.classList.contains('nav-sub-item')) {
+        document.querySelectorAll('.nav-item[data-view]').forEach(n => {
+          if (n.dataset.view === 'industry') n.classList.add('active');
+        });
+      }
+    }
+  }
+</script>
+</body>
+</html>
