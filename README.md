@@ -4,28 +4,34 @@
 
 ## 站点结构
 
-本站采用 **SPA 单页架构**（单 HTML + JS 切换视图），避免跨文件路径跳转在静态托管平台被拦截。
+本站采用 **SPA 单页架构**，每天只有一期「日报」生效（默认显示最新归档），侧边栏提供历史归档切换。
 
 ```
 hr-intel-station/
-├── index.html              # 站点主入口（含 4 个 view：home/industry/report/hiring）
+├── index.html              # 站点主入口（含每日 view-report-YYYY-MM-DD + 侧边栏归档菜单）
 └── reports/                # 归档目录（每日历史报告快照，仅作本地备份）
-    └── 2026-06-17.html
 ```
 
 部署到静态托管时，**只需上传 `index.html` 即可**。`reports/` 是本地归档，无需部署。
 
-## 4 个 View 说明
+## View 与归档规则
 
-| View | 入口位置 | 内容 |
-| --- | --- | --- |
-| `home` | 默认首页（无侧边栏） | Hero + 数据看板 + 招聘需求导览 |
-| `industry` | 侧边栏"行业情报" | 历史日报归档卡片 |
-| `report-2026-06-17` | 侧边栏"行业情报"子项 | 当日日报（行业动态 + 组织架构变化 + 后厂村八卦·近 7 日） |
-| `hiring` | 侧边栏"招聘需求" | 招聘需求子卡（4 张） |
+- **默认 view**：`report-YYYY-MM-DD`（最新一期日报），脚本自动从侧边栏第一个可点击归档项加载
+- **侧边栏归档菜单**：每日 09:00 自动更新任务会在 nav-sub 顶部新增一项 `report-YYYY-MM-DD`，标记 NEW；历史项会向下推移但**不会被覆盖**
+- **单个日报 view 内容**：breadcrumb + hero（4 项 stats）+ 组织架构变化模块 + 后厂村八卦·近 7 日模块 + 后续关注 + 信息来源
 
-> 顶部 nav（仅 home 显示）：Logo + 行业情报 / 最新日报 / 招聘需求
-> 侧边栏（仅非 home view 显示）：260px sticky + 4 个一级菜单
+## 每日更新流程（自动化）
+
+每天 09:00 由扣子 calendar 任务自动执行：
+
+1. 跑 topic_tracking briefing 生成昨日日报（verify-run 验收）
+2. 搜近 7 天八卦素材（严格过滤）
+3. 在 `index.html` 里：
+   - 复制当前 `view-report-XXXX-XX-XX` section → 新 `view-report-YESTERDAY` section
+   - 在侧边栏 nav-sub 顶部插入新归档链接，标 NEW
+   - 同步更新首页 stats、breadcrumb、日期引用
+4. `git add` + `commit` + `push` 到 GitHub
+5. EdgeOne Pages 监听 push 事件，30 秒内自动部署到生产
 
 ## 部署到腾讯云 EdgeOne Pages（推荐）
 

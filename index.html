@@ -210,7 +210,7 @@
 </style>
 </head>
 <body>
-<div class="layout no-sidebar" id="layout">
+<div class="layout" id="layout">
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-inner">
@@ -223,24 +223,7 @@
       </div>
 
       <div class="nav-section">
-        <div class="nav-label">导航</div>
-        <a class="nav-item active" data-view="home" onclick="switchView('home', this)">
-          <span class="nav-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
-          首页
-        </a>
-        <a class="nav-item" data-view="industry" onclick="switchView('industry', this)">
-          <span class="nav-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h2l3-9 4 18 3-9 3 6h5"/></svg></span>
-          行业情报
-          <span class="nav-badge">NEW</span>
-        </a>
-        <a class="nav-item" data-view="hiring" onclick="switchView('hiring', this)">
-          <span class="nav-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg></span>
-          招聘需求
-        </a>
-      </div>
-
-      <div class="nav-section">
-        <div class="nav-label">日报归档</div>
+        <div class="nav-label">日报归档（每日 09:00 新增）</div>
         <div class="nav-sub">
           <a class="nav-sub-item" data-view="report-2026-06-17" onclick="switchView('report-2026-06-17', this)">
             2026-06-17
@@ -262,184 +245,6 @@
       </div>
     </div>
   </aside>
-
-  <!-- Top Nav (home only) -->
-  <nav class="topnav">
-    <div class="topnav-inner">
-      <div class="topnav-brand">
-        <div class="topnav-brand-mark">HR</div>
-        <span>招聘情报站</span>
-      </div>
-      <div class="topnav-links">
-        <a class="topnav-link" onclick="switchView('industry', document.querySelector('[data-view=industry]'))">行业情报</a>
-        <a class="topnav-link" onclick="switchView('report-2026-06-17', document.querySelector('[data-view=report-2026-06-17]'))">最新日报</a>
-        <a class="topnav-link" onclick="switchView('hiring', document.querySelector('[data-view=hiring]'))">招聘需求</a>
-        <div class="topnav-status"><span class="status-dot"></span> 09:00 自动更新</div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main -->
-  <main class="main">
-    <div class="container">
-
-      <!-- ============== View: Home ============== -->
-      <section class="view active" id="view-home">
-        <section class="hero">
-          <div class="hero-tag">互联网 HR 情报</div>
-          <h1 class="hero-title">招聘情报站</h1>
-          <p class="hero-sub">每日追踪互联网行业招聘趋势、AI工具应用、组织变化与八卦，为 HR 和招聘从业者提供可落地的知识输入。</p>
-          <div class="hero-meta">
-            <span>📅 每日 09:00 自动更新</span>
-            <span>·</span>
-            <span>🔍 行业动态 + 组织变化 + 后厂村八卦</span>
-          </div>
-          <div class="hero-cta">
-            <button class="btn btn-primary" onclick="switchView('report-2026-06-17', document.querySelector('[data-view=report-2026-06-17]'))">
-              📰 查看今日日报
-            </button>
-            <button class="btn btn-secondary" onclick="switchView('industry', document.querySelector('[data-view=industry]'))">
-              📊 历史情报
-            </button>
-          </div>
-        </section>
-
-        <div class="stats">
-          <div class="stat">
-            <div class="stat-num blue">2</div>
-            <div class="stat-label">今日重点事件</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num purple">1</div>
-            <div class="stat-label">组织变化</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num green">1</div>
-            <div class="stat-label">行业数据</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num" style="color: var(--tc-orange);">6</div>
-            <div class="stat-label">近 7 日八卦</div>
-          </div>
-        </div>
-
-        <section class="module">
-          <div class="module-head industry">
-            <div class="module-icon industry">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h2l3-9 4 18 3-9 3 6h5"/></svg>
-            </div>
-            <div class="module-title-wrap">
-              <div class="module-title">今日日报</div>
-              <div class="module-title-en">TODAY'S BRIEF</div>
-            </div>
-            <div class="module-count">2026-06-17</div>
-          </div>
-          <div class="module-body">
-            <div class="report-card" onclick="switchView('report-2026-06-17', this)" style="cursor:pointer">
-              <div class="report-date">
-                <div class="report-date-day">17</div>
-                <div class="report-date-mo">06 月</div>
-              </div>
-              <div class="report-info">
-                <div class="report-meta">
-                  <span>日报</span>
-                  <span>·</span>
-                  <span>第 25 周 · 周二</span>
-                </div>
-                <div class="report-title">微软 Azure 中国裁员 N+7 · 前程无忧招聘行情报告</div>
-                <div class="report-summary">微软 Azure 中国区启动新一轮裁员并以 N+7 高额补偿收场，外企裁员走向「体面化」；前程无忧报告显示 AI 与全球化正双轮驱动电商人才供需升级。</div>
-                <div class="report-tags">
-                  <span class="report-tag report-tag-blue">AI 招聘</span>
-                  <span class="report-tag report-tag-purple">组织优化</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="empty">
-              <div class="empty-icon">📅</div>
-              <div>更多历史周报将在每日 09:00 自动归档</div>
-            </div>
-          </div>
-        </section>
-
-        <section class="logos">
-          <div class="logos-title">监测公司</div>
-          <div class="logo-grid">
-            <div class="logo-cell"><span class="logo-dot ali">阿</span>阿里巴巴</div>
-            <div class="logo-cell"><span class="logo-dot tx">腾</span>腾讯</div>
-            <div class="logo-cell"><span class="logo-dot bytedance">字</span>字节跳动</div>
-            <div class="logo-cell"><span class="logo-dot mt">美</span>美团</div>
-            <div class="logo-cell"><span class="logo-dot jd">京</span>京东</div>
-            <div class="logo-cell"><span class="logo-dot pdd">多</span>拼多多</div>
-            <div class="logo-cell"><span class="logo-dot ks">快</span>快手</div>
-            <div class="logo-cell"><span class="logo-dot xhs">书</span>小红书</div>
-            <div class="logo-cell"><span class="logo-dot bili">B</span>B站</div>
-            <div class="logo-cell"><span class="logo-dot boss">BOSS</span>Boss直聘</div>
-          </div>
-        </section>
-
-        <div class="footer">
-          <div class="footer-line">© 2026 招聘情报站 · HR 每日情报中心</div>
-          <div class="footer-line">由扣子话题追踪技能驱动 · 每日 09:00 自动更新</div>
-        </div>
-      </section>
-
-      <!-- ============== View: Industry ============== -->
-      <section class="view" id="view-industry">
-        <div class="breadcrumb">
-          <a class="crumb-link" data-view="home" onclick="switchView('home', this)">招聘情报站</a>
-          <span class="breadcrumb-sep">/</span>
-          <span class="current">行业情报</span>
-        </div>
-
-        <section class="hero">
-          <div class="hero-title">行业情报中心</div>
-          <p class="hero-sub">追踪互联网行业招聘趋势、AI工具应用与组织变化，持续关注，持续更新。</p>
-        </section>
-
-        <section class="module">
-          <div class="module-head industry">
-            <div class="module-icon industry">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h2l3-9 4 18 3-9 3 6h5"/></svg>
-            </div>
-            <div class="module-title-wrap">
-              <div class="module-title">日报归档</div>
-              <div class="module-title-en">REPORT ARCHIVE</div>
-            </div>
-          </div>
-          <div class="module-body">
-            <div class="report-card" onclick="switchView('report-2026-06-17', this)" style="cursor:pointer">
-              <div class="report-date">
-                <div class="report-date-day">17</div>
-                <div class="report-date-mo">06 月</div>
-              </div>
-              <div class="report-info">
-                <div class="report-meta">
-                  <span>日报</span>
-                  <span>·</span>
-                  <span>第 25 周 · 周二</span>
-                </div>
-                <div class="report-title">微软 Azure 中国裁员 N+7 · 前程无忧招聘行情报告</div>
-                <div class="report-summary">微软 Azure 中国区启动新一轮裁员并以 N+7 高额补偿收场；前程无忧报告显示 AI 与全球化正双轮驱动电商人才供需升级。</div>
-                <div class="report-tags">
-                  <span class="report-tag report-tag-blue">AI 招聘</span>
-                  <span class="report-tag report-tag-purple">组织优化</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="empty">
-              <div class="empty-icon">📅</div>
-              <div>更多历史周报将在每日 09:00 自动归档</div>
-            </div>
-          </div>
-        </section>
-
-        <div class="footer">
-          <div class="footer-line">© 2026 招聘情报站 · HR 每日情报中心</div>
-        </div>
-      </section>
-
       <!-- ============== View: Report 2026-06-17 ============== -->
       <section class="view" id="view-report-2026-06-17">
         <div class="breadcrumb">
@@ -741,54 +546,6 @@
         </div>
       </section>
 
-      <!-- ============== View: Hiring ============== -->
-      <section class="view" id="view-hiring">
-        <div class="breadcrumb">
-          <a class="crumb-link" data-view="home" onclick="switchView('home', this)">招聘情报站</a>
-          <span class="breadcrumb-sep">/</span>
-          <span class="current">招聘需求</span>
-        </div>
-
-        <section class="module">
-          <div class="module-head org">
-            <div class="module-icon org">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M16 3.13a4 4 0 0 1 0 7.75M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
-            </div>
-            <div class="module-title-wrap">
-              <div class="module-title">招聘需求</div>
-              <div class="module-title-en">HIRING · DEMAND</div>
-            </div>
-          </div>
-
-          <div class="hiring-intro">
-            围绕 HR 行业的前沿方向，情报站重点追踪以下领域的招聘需求变化与人才画像演进，为 HR 自身能力建设与团队招聘决策提供参考。
-          </div>
-
-          <div class="hiring-grid">
-            <div class="hiring-card">
-              <div class="hiring-card-title"><div class="hiring-card-emoji">🤖</div>AI 招聘产品经理</div>
-              <div class="hiring-card-desc">负责 AI Agent 类工具的产品设计，熟悉大模型能力边界，能将 HR 流程转化为可落地的产品方案。</div>
-            </div>
-            <div class="hiring-card">
-              <div class="hiring-card-title"><div class="hiring-card-emoji">📊</div>人力数据分析专家</div>
-              <div class="hiring-card-desc">搭建人力数据指标体系，从组织健康度、人效、人力成本等维度为业务决策提供数据支撑。</div>
-            </div>
-            <div class="hiring-card">
-              <div class="hiring-card-title"><div class="hiring-card-emoji">🌏</div>海外 HRBP</div>
-              <div class="hiring-card-desc">服务东南亚、中东等海外业务的扩张需求，熟悉当地劳动法规与文化差异，能搭建属地化 HR 体系。</div>
-            </div>
-            <div class="hiring-card">
-              <div class="hiring-card-title"><div class="hiring-card-emoji">🧠</div>组织发展（OD）专家</div>
-              <div class="hiring-card-desc">在 AI 替代传统岗位的趋势下，主导岗位价值评估体系重塑、组织架构优化与高潜人才培养。</div>
-            </div>
-          </div>
-        </section>
-
-        <div class="footer">
-          <div class="footer-line">© 2026 招聘情报站 · HR 每日情报中心</div>
-        </div>
-      </section>
-
     </div>
   </main>
 </div>
@@ -801,22 +558,21 @@
       target.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    const layout = document.querySelector('.layout');
-    if (name === 'home') {
-      layout.classList.add('no-sidebar');
-    } else {
-      layout.classList.remove('no-sidebar');
-    }
-    document.querySelectorAll('.nav-item, .nav-sub-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.nav-sub-item').forEach(n => n.classList.remove('active'));
     if (el) {
       el.classList.add('active');
-      if (el.classList.contains('nav-sub-item')) {
-        document.querySelectorAll('.nav-item[data-view]').forEach(n => {
-          if (n.dataset.view === 'industry') n.classList.add('active');
-        });
-      }
     }
   }
+
+  // 默认进入最新一期日报
+  (function() {
+    const subs = document.querySelectorAll('.nav-sub-item:not(.disabled)');
+    if (subs.length > 0) {
+      const first = subs[0];
+      const view = first.dataset.view;
+      if (view) switchView(view, first);
+    }
+  })();
 </script>
 </body>
 </html>
