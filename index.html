@@ -225,9 +225,12 @@
       <div class="nav-section">
         <div class="nav-label">日报归档（每日 09:00 新增）</div>
         <div class="nav-sub">
+          <a class="nav-sub-item" data-view="report-2026-06-21" onclick="switchView('report-2026-06-21', this)">
+            2026-06-21
+            <span class="new-tag">NEW</span>
+          </a>
           <a class="nav-sub-item" data-view="report-2026-06-20" onclick="switchView('report-2026-06-20', this)">
             2026-06-20
-            <span class="new-tag">NEW</span>
           </a>
           <a class="nav-sub-item" data-view="report-2026-06-19" onclick="switchView('report-2026-06-19', this)">
             2026-06-19
@@ -880,7 +883,314 @@
         </div>
       </section>
 
-      <!-- ============== View: Report 2026-06-20 ============== -->
+      <!-- ============== View: Report 2026-06-21 ============== -->
+      <section class="view" id="view-report-2026-06-21">
+        <div class="breadcrumb">
+          <a class="crumb-link" onclick="switchView('home', this)">招聘情报站</a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="current">2026-06-21 日报</span>
+        </div>
+
+        <section class="hero report">
+          <div class="hero-meta">
+            <span class="hero-tag">日报</span>
+            <span>2026-06-21 · 第 25 周 · 周六</span>
+          </div>
+          <h1 class="hero-title">互联网行业 HR 每日情报</h1>
+          <p class="hero-sub">
+            本期围绕AI对人力资源行业的结构性影响展开：全球科技行业裁员潮持续，AI替代HR岗位趋势加速；同时国内头部HR SaaS厂商北森重磅发布AI原生招聘产品，标志着AI招聘正式迈入3.0时代。
+          </p>
+          <div class="stats report-stats">
+            <div class="stat">
+              <div class="stat-num blue">2</div>
+              <div class="stat-label">重点事件</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num purple">1</div>
+              <div class="stat-label">趋势分析</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num green">1</div>
+              <div class="stat-label">产品发布</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num" style="color: var(--tc-orange);">5</div>
+              <div class="stat-label">近 7 日八卦</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 行业趋势 -->
+        <section class="module">
+          <div class="module-head industry">
+            <div class="module-icon industry">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h2l3-9 4 18 3-9 3 6h5"/></svg>
+            </div>
+            <div class="module-title-wrap">
+              <div class="module-title">行业趋势</div>
+              <div class="module-title-en">TREND · ANALYSIS</div>
+            </div>
+            <div class="module-count">2 条</div>
+          </div>
+          <div class="module-body">
+            <div class="event">
+              <div class="event-no blue">1</div>
+              <div class="event-content">
+                <div class="event-meta">
+                  <div class="company-chip">
+                    <span class="company-logo tx">全球</span>
+                    科技行业
+                  </div>
+                  <span class="event-tag">裁员潮 · AI替代</span>
+                </div>
+                <div class="event-headline">全球科技行业Q1裁员8.17万人，HR运营岗位72%受AI冲击</div>
+                <p class="event-desc">
+                  36氪发布深度分析报告，2026年Q1全球科技行业裁员约<strong>8.17万人</strong>，创两年单季新高。AI替代浪潮下，招聘/人力资源运营岗位<strong>72%受影响</strong>，Meta已裁减HR职能部门35%-40%。
+                </p>
+                <ul class="event-bullets">
+                  <li>Salesforce CEO明确告知投资者需要更少人力</li>
+                  <li>甲骨文裁撤30000个传统岗位以资助数据中心建设</li>
+                  <li>组织形态加速扁平化，每位管理者直接领导人数从2013年的8.1跃升至2025年的12.1</li>
+                </ul>
+                <div class="insight">
+                  <span class="insight-tag">实操启示</span>
+                  <span class="insight-text">AI对HR从业者的冲击是结构性的。72%的岗位受影响意味着基础筛选、简历解析等重复性工作将快速被替代。HR需向战略规划、人才发展、组织设计等高价值方向转型。</span>
+                </div>
+                <div class="event-foot">
+                  <div class="event-source">来源：36氪《大扁平化时代：消失的中层》（2026-06-22）</div>
+                  <a class="read-more" href="https://36kr.com/p/3828581749772928" target="_blank">阅读原文 →</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="event">
+              <div class="event-no purple">2</div>
+              <div class="event-content">
+                <div class="event-meta">
+                  <div class="company-chip">
+                    <span class="company-logo tx">校招</span>
+                    应届生市场
+                  </div>
+                  <span class="event-tag">AI求职 · 变革</span>
+                </div>
+                <div class="event-headline">95%应届生用AI求职，简历同质化成企业新难题</div>
+                <p class="event-desc">
+                  北森报告显示，2026年<strong>95%应届生</strong>使用AI工具求职，66.7%使用AI润色简历。企业面临三大困境：简历同质化、面试伪优质、规模化招聘效率问题。
+                </p>
+                <ul class="event-bullets">
+                  <li>84%使用AI面试官的企业将AI面试用于校招</li>
+                  <li>AI优化后的简历人人"完美"，传统筛选方式失效</li>
+                  <li>候选人用AI反复模拟面试，"会面试"不等于"有能力"</li>
+                </ul>
+                <div class="insight">
+                  <span class="insight-tag">实操启示</span>
+                  <span class="insight-text">AI求职时代，HR需升级评估体系：不仅看简历内容，更要验证真实能力；AI素养应纳入评估维度；行为面试、案例分析等深度评估方式价值凸显。</span>
+                </div>
+                <div class="event-foot">
+                  <div class="event-source">来源：北森《AI原生求职时代2026企业校园招聘的新挑战与新解法》</div>
+                  <a class="read-more" href="https://docs.pingcode.com/baike/5241864" target="_blank">阅读原文 →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- HR科技产品 -->
+        <section class="module">
+          <div class="module-head org">
+            <div class="module-icon org">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            </div>
+            <div class="module-title-wrap">
+              <div class="module-title">HR科技产品</div>
+              <div class="module-title-en">HR TECH · LAUNCH</div>
+            </div>
+            <div class="module-count">1 条</div>
+          </div>
+          <div class="module-body">
+            <div class="event">
+              <div class="event-no purple">1</div>
+              <div class="event-content">
+                <div class="event-meta">
+                  <div class="company-chip">
+                    <span class="logo-dot" style="width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#00C896 0%,#00A676 100%);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">北</span>
+                    北森
+                  </div>
+                  <span class="event-tag">产品发布 · AI Agent</span>
+                </div>
+                <div class="event-headline">北森发布AI原生招聘专家团，5大Agent协同重构招聘流程</div>
+                <p class="event-desc">
+                  国内头部HR SaaS厂商北森发布AI原生招聘专家团，由<strong>5大智能Agent协同作战</strong>重构传统招聘流程：HR用自然语言下达指令，Agent自动完成画像构建、全网寻访、简历评估、AI面试、进度推进。
+                </p>
+                <ul class="event-bullets">
+                  <li>近1000家龙头企业实战验证</li>
+                  <li>AI面试官作答量超200万</li>
+                  <li>招聘效率提升81%</li>
+                  <li>标志着AI招聘从"工具辅助"正式迈入"专家协同"的3.0时代</li>
+                </ul>
+                <div class="insight">
+                  <span class="insight-tag">实操启示</span>
+                  <span class="insight-text">AI Agent正在重塑HR工作方式。从单点工具到全流程协同，HR的角色正在从"执行者"向"指挥者"转变。掌握与AI Agent协作的能力将成为HR核心竞争力。</span>
+                </div>
+                <div class="event-foot">
+                  <div class="event-source">来源：PingCode智库（2026-06-22）</div>
+                  <a class="read-more" href="https://docs.pingcode.com/baike/5243701" target="_blank">阅读原文 →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 后厂村八卦（近 7 日） -->
+        <section class="module">
+          <div class="module-head gossip">
+            <div class="module-icon gossip">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div class="module-title-wrap">
+              <div class="module-title">后厂村八卦 · 近 7 日</div>
+              <div class="module-title-en">GOSSIP · 7-DAY</div>
+            </div>
+            <div class="module-count">5 条</div>
+          </div>
+          <div class="module-body">
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">1</div>
+                <div class="company-chip">
+                  <span class="company-logo tx">Meta</span>
+                  Meta
+                </div>
+                <span class="gossip-tag-hot">🔥 爆</span>
+                <span class="gossip-card-time">近7日</span>
+              </div>
+              <div class="gossip-card-title">😤 员工全员直播爆粗：小扎道歉「我们犯了错」</div>
+              <p class="gossip-card-desc">
+                Meta内部直播失控：员工直接劫持麦克风，爆粗口喊话AI高管「他就是个混蛋」，引发全公司震动。<strong>小扎罕见道歉</strong>，承认重组犯错，承诺2026年不再大规模裁员、恢复固定工位、增加团队活动预算。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自新浪新闻</span>
+                <span>🍉 内部动荡</span>
+              </div>
+            </div>
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">2</div>
+                <div class="company-chip">
+                  <span class="company-logo tx">钉</span>
+                  钉钉
+                </div>
+                <span class="gossip-tag-hot">🔥 爆</span>
+                <span class="gossip-card-time">近7日</span>
+              </div>
+              <div class="gossip-card-title">🔥 《置身钉内/钉外》刷屏：阿里火速换帅</div>
+              <p class="gossip-card-desc">
+                钉钉两篇离职长文《置身钉内》《置身钉外》揭露高压加班、决策浮躁，迅速引发全网热议。<strong>阿里次日火速批评管理方式</strong>，推动管理层人事调整，新CEO陈宇森上任。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自新浪财经</span>
+                <span>🍉 管理风波</span>
+              </div>
+            </div>
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">3</div>
+                <div class="company-chip">
+                  <span class="company-logo tx">腾</span>
+                  腾讯
+                </div>
+                <span class="gossip-tag-fresh">NEW</span>
+                <span class="gossip-card-time">近7日</span>
+              </div>
+              <div class="gossip-card-title">💰 腾讯突袭上线Agent网盘：百度阿里齐聚</div>
+              <p class="gossip-card-desc">
+                腾讯突然上线「腾讯网盘」官网，定位Agent时代专用网盘。加上百度、阿里，三大厂齐聚<strong>Agent网盘大战</strong>。这场新的AI应用入口争夺战悄然开打。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自36氪</span>
+                <span>🍉 产品动态</span>
+              </div>
+            </div>
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">4</div>
+                <div class="company-chip">
+                  <span class="company-logo ali">阿里</span>
+                  阿里云
+                </div>
+                <span class="gossip-tag-emo">💰 薪酬</span>
+                <span class="gossip-card-time">近7日</span>
+              </div>
+              <div class="gossip-card-title">📈 阿里云算力涨价34%：云厂商集体告别「只降价」</div>
+              <p class="gossip-card-desc">
+                阿里云官方调价，AI算力卡、并行文件存储<strong>最高涨幅34%</strong>。百度云、腾讯云同步跟进，<strong>彻底终结云计算二十余年「只降价不涨价」的行业惯例</strong>。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自脉脉</span>
+                <span>🍉 行业变天</span>
+              </div>
+            </div>
+
+            <div class="gossip-card">
+              <div class="gossip-card-head">
+                <div class="gossip-card-no">5</div>
+                <div class="company-chip">
+                  <span class="company-logo tx">文</span>
+                  文科生
+                </div>
+                <span class="gossip-tag-fresh">NEW</span>
+                <span class="gossip-card-time">近7日</span>
+              </div>
+              <div class="gossip-card-title">🎨 月薪3万疯抢文科生：不是文科翻身了</div>
+              <p class="gossip-card-desc">
+                字节、腾讯、百度同时开放<strong>AI叙事设计师</strong>岗位，小红书AI内容体验岗应届起薪2-3万/月（16薪）。不是文科翻身了，而是AI时代需要懂情感逻辑的跨界人才。
+              </p>
+              <div class="gossip-card-foot">
+                <span class="gossip-source">综合自脉脉</span>
+                <span>🍉 岗位趋势</span>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <div class="gossip-disclaimer">
+          <span class="gossip-disclaimer-icon">🍉</span>
+          <div>
+            <strong>吃瓜提示：</strong>本栏目八卦综合自脉脉职言、小红书「大厂日爆」类自媒体、36氪/搜狐等公开渠道爆料，<strong>仅供娱乐参考</strong>，不代表本情报站立场。如涉及具体个人，请相关方通过法律途径解决。
+          </div>
+        </div>
+
+        <section class="watch">
+          <div class="watch-title">后续关注</div>
+          <div class="watch-grid">
+            <div class="watch-item"><span class="watch-item-arrow">›</span>AI面试官规模化落地后的企业实际效果数据</div>
+            <div class="watch-item"><span class="watch-item-arrow">›</span>HR从业者如何提升在AI替代浪潮中的不可替代性</div>
+            <div class="watch-item"><span class="watch-item-arrow">›</span>更多企业如何应对简历同质化和面试伪优质问题</div>
+            <div class="watch-item"><span class="watch-item-arrow">›</span>Agent网盘大战的后续产品与竞争格局</div>
+          </div>
+        </section>
+
+        <section class="sources">
+          <div class="sources-title">信息来源</div>
+          <div class="sources-list">
+            <div class="source-item"><a href="https://36kr.com/p/3828581749772928" target="_blank">36氪 · 大扁平化时代：消失的中层</a></div>
+            <div class="source-item"><a href="https://docs.pingcode.com/baike/5243701" target="_blank">PingCode智库 · 北森AI招聘专家团发布</a></div>
+            <div class="source-item"><a href="https://docs.pingcode.com/baike/5241864" target="_blank">PingCode智库 · AI原生求职时代校招报告</a></div>
+          </div>
+        </section>
+
+        <div class="footer">
+          <div class="footer-line">© 2026 招聘情报站 · HR 每日情报中心</div>
+          <div class="footer-line">由扣子话题追踪技能驱动 · 每日 09:00 自动更新</div>
+        </div>
+      </section>
+
+<!-- ============== View: Report 2026-06-20 ============== -->
       <section class="view active" id="view-report-2026-06-20">
         <div class="breadcrumb">
           <a class="crumb-link" data-view="home" onclick="switchView('home', this)">招聘情报站</a>
